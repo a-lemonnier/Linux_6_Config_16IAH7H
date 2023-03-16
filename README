@@ -1,0 +1,128 @@
+# Linux_6_Config_16IAH7H
+Working config file for the kernel from 6.0.0 to 6.2.3 on gentoo
+Issue: hibernate disconnected the screen at wake up. Systemd services related to nvidia drivers do not help.
+Optimus is working: tested with glxgears and optirun blender with eevee (CUDA 12 / gcc 12).
+
+hw-probe: https://linux-hardware.org/?probe=d0ab04cac0
+
+root - /usr/src/linux # uname -r                                                                                                                                                             18:28:52 | 0 | pts/1 | gentoo-legion
+6.2.3-gentoo
+
+root - /usr/src/linux # lspci -k                                                                                                                                                             18:27:36 | 0 | pts/1 | gentoo-legion
+00:00.0 Host bridge: Intel Corporation 12th Gen Core Processor Host Bridge/DRAM Registers (rev 02)
+        Subsystem: Lenovo 12th Gen Core Processor Host Bridge/DRAM Registers
+        Kernel driver in use: igen6_edac
+        Kernel modules: igen6_edac
+00:01.0 PCI bridge: Intel Corporation 12th Gen Core Processor PCI Express x16 Controller #1 (rev 02)
+        Subsystem: Lenovo 12th Gen Core Processor PCI Express x16 Controller
+        Kernel driver in use: pcieport
+00:02.0 VGA compatible controller: Intel Corporation Alder Lake-P Integrated Graphics Controller (rev 0c)
+        Subsystem: Lenovo Alder Lake-P Integrated Graphics Controller
+        Kernel driver in use: i915
+        Kernel modules: i915
+00:04.0 Signal processing controller: Intel Corporation Alder Lake Innovation Platform Framework Processor Participant (rev 02)
+        Subsystem: Lenovo Alder Lake Innovation Platform Framework Processor Participant
+        Kernel driver in use: proc_thermal_pci
+        Kernel modules: processor_thermal_device_pci
+00:06.0 PCI bridge: Intel Corporation 12th Gen Core Processor PCI Express x4 Controller #0 (rev 02)
+        Subsystem: Lenovo 12th Gen Core Processor PCI Express x4 Controller
+        Kernel driver in use: pcieport
+00:06.2 PCI bridge: Intel Corporation 12th Gen Core Processor PCI Express x4 Controller #2 (rev 02)
+        Subsystem: Lenovo 12th Gen Core Processor PCI Express x4 Controller
+        Kernel driver in use: pcieport
+00:07.0 PCI bridge: Intel Corporation Alder Lake-P Thunderbolt 4 PCI Express Root Port #0 (rev 02)
+        Subsystem: Lenovo Alder Lake-P Thunderbolt 4 PCI Express Root Port
+        Kernel driver in use: pcieport
+00:0a.0 Signal processing controller: Intel Corporation Platform Monitoring Technology (rev 01)
+        Subsystem: Lenovo Platform Monitoring Technology
+        Kernel driver in use: intel_vsec
+        Kernel modules: intel_vsec
+00:0d.0 USB controller: Intel Corporation Alder Lake-P Thunderbolt 4 USB Controller (rev 02)
+        Subsystem: Lenovo Alder Lake-P Thunderbolt 4 USB Controller
+        Kernel driver in use: xhci_hcd
+00:0d.2 USB controller: Intel Corporation Alder Lake-P Thunderbolt 4 NHI #0 (rev 02)
+        Subsystem: Lenovo Alder Lake-P Thunderbolt 4 NHI
+        Kernel driver in use: thunderbolt
+        Kernel modules: thunderbolt
+00:14.0 USB controller: Intel Corporation Alder Lake PCH USB 3.2 xHCI Host Controller (rev 01)
+        Subsystem: Lenovo Alder Lake PCH USB 3.2 xHCI Host Controller
+        Kernel driver in use: xhci_hcd
+00:14.2 RAM memory: Intel Corporation Alder Lake PCH Shared SRAM (rev 01)
+        Subsystem: Lenovo Alder Lake PCH Shared SRAM
+00:14.3 Network controller: Intel Corporation Alder Lake-P PCH CNVi WiFi (rev 01)
+        Subsystem: Intel Corporation Wi-Fi 6E AX211 160MHz
+        Kernel driver in use: iwlwifi
+        Kernel modules: iwlwifi
+00:15.0 Serial bus controller: Intel Corporation Alder Lake PCH Serial IO I2C Controller #0 (rev 01)
+        Subsystem: Lenovo Alder Lake PCH Serial IO I2C Controller
+        Kernel driver in use: intel-lpss
+00:15.1 Serial bus controller: Intel Corporation Alder Lake PCH Serial IO I2C Controller #1 (rev 01)
+        Subsystem: Lenovo Alder Lake PCH Serial IO I2C Controller
+        Kernel driver in use: intel-lpss
+00:16.0 Communication controller: Intel Corporation Alder Lake PCH HECI Controller (rev 01)
+        Subsystem: Lenovo Alder Lake PCH HECI Controller
+        Kernel driver in use: mei_me
+        Kernel modules: mei_me
+00:1d.0 PCI bridge: Intel Corporation Device 51b0 (rev 01)
+        Subsystem: Lenovo Device 3817
+        Kernel driver in use: pcieport
+00:1d.1 PCI bridge: Intel Corporation Alder Lake PCI Express x1 Root Port #10 (rev 01)
+        Subsystem: Lenovo Alder Lake PCI Express x1 Root Port
+        Kernel driver in use: pcieport
+00:1f.0 ISA bridge: Intel Corporation Alder Lake PCH eSPI Controller (rev 01)
+        Subsystem: Lenovo Alder Lake PCH eSPI Controller
+00:1f.3 Audio device: Intel Corporation Alder Lake PCH-P High Definition Audio Controller (rev 01)
+        Subsystem: Lenovo Alder Lake PCH-P High Definition Audio Controller
+        Kernel driver in use: snd_hda_intel
+        Kernel modules: snd_hda_intel, snd_sof_pci_intel_tgl
+00:1f.4 SMBus: Intel Corporation Alder Lake PCH-P SMBus Host Controller (rev 01)
+        Subsystem: Lenovo Alder Lake PCH-P SMBus Host Controller
+        Kernel driver in use: i801_smbus
+        Kernel modules: i2c_i801
+00:1f.5 Serial bus controller: Intel Corporation Alder Lake-P PCH SPI Controller (rev 01)
+        Subsystem: Lenovo Alder Lake-P PCH SPI Controller
+01:00.0 VGA compatible controller: NVIDIA Corporation GA104M [Geforce RTX 3070 Ti Laptop GPU] (rev a1)
+        Subsystem: Lenovo GA104M [Geforce RTX 3070 Ti Laptop GPU]
+        Kernel modules: nvidiafb
+01:00.1 Audio device: NVIDIA Corporation GA104 High Definition Audio Controller (rev a1)
+        Subsystem: Lenovo GA104 High Definition Audio Controller
+        Kernel driver in use: snd_hda_intel
+        Kernel modules: snd_hda_intel
+05:00.0 Non-Volatile memory controller: Sandisk Corp Device 5030 (rev 01)
+        Subsystem: Sandisk Corp Device 5030
+        Kernel driver in use: nvme
+        Kernel modules: nvme
+06:00.0 Non-Volatile memory controller: Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO
+        Subsystem: Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO
+        Kernel driver in use: nvme
+        Kernel modules: nvme
+34:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)
+        Subsystem: Lenovo RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+        Kernel driver in use: r8169
+        Kernel modules: r8169
+
+root - /usr/src/linux # lsusb                                                                                                                                                                18:27:40 | 0 | pts/1 | gentoo-legion
+Bus 004 Device 002: ID 05e3:0620 Genesys Logic, Inc. GL3523 Hub
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 003: ID 048d:c102 Integrated Technology Express, Inc. ITE Device(8910)
+Bus 002 Device 002: ID 05e3:0610 Genesys Logic, Inc. Hub
+Bus 002 Device 004: ID 8087:0033 Intel Corp.
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+Plasma:
+Operating System: Gentoo Linux 2.13
+KDE Plasma Version: 5.27.3
+KDE Frameworks Version: 5.104.0
+Qt Version: 5.15.8
+Kernel Version: 6.2.3-gentoo (64-bit)
+Graphics Platform: Wayland
+Processors: 20 × 12th Gen Intel® Core™ i7-12700H
+Memory: 31.1 Gio of RAM
+Graphics Processor: Mesa Intel® Graphics
+Manufacturer: LENOVO
+System Version: Legion 5 Pro 16IAH7H
+
+
+
