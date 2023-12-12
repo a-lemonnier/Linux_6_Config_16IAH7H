@@ -1,12 +1,10 @@
 # Linux_6_Config_16IAH7H
-Working config file for the kernel from 6.0.0 to 6.2.3 on gentoo
-Issue: hibernate disconnected the screen at wake up. Systemd services related to nvidia drivers do not help.
-Optimus is working: tested with glxgears and optirun blender with eevee (CUDA 12 / gcc 12).
+Working config file for the kernel from 6.0.0 to 6.6.6 on gentoo
 
 hw-probe: https://linux-hardware.org/?probe=d0ab04cac0
 
 root - /usr/src/linux # uname -r                                                                                                                                                             18:28:52 | 0 | pts/1 | gentoo-legion
-6.2.3-gentoo
+6.6.6-gentoo
 
 root - /usr/src/linux # lspci -k                                                                                                                                                             18:27:36 | 0 | pts/1 | gentoo-legion
 00:00.0 Host bridge: Intel Corporation 12th Gen Core Processor Host Bridge/DRAM Registers (rev 02)
@@ -112,16 +110,17 @@ Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 Plasma:
-Operating System: Gentoo Linux 2.13
-KDE Plasma Version: 5.27.3
-KDE Frameworks Version: 5.104.0
-Qt Version: 5.15.8
-Kernel Version: 6.2.3-gentoo (64-bit)
+Operating System: Gentoo Linux 2.14
+KDE Plasma Version: 5.27.10
+KDE Frameworks Version: 5.112.0
+Qt Version: 5.15.11
+Kernel Version: 6.6.6-gentoo (64-bit)
 Graphics Platform: Wayland
 Processors: 20 × 12th Gen Intel® Core™ i7-12700H
 Memory: 31.1 Gio of RAM
 Graphics Processor: Mesa Intel® Graphics
 Manufacturer: LENOVO
+Product Name: 82RF
 System Version: Legion 5 Pro 16IAH7H
 
 
